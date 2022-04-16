@@ -104,7 +104,6 @@ class Client_Window():
 
     def get_location_on_screen(self):
         print('Press "h" to get the mouse position on screen! Press "q" to quit!')
-        self.window.activate()
         while True:
             if keyboard.is_pressed('h'):
                 current_mouse_position = mouse_position()
@@ -115,7 +114,6 @@ class Client_Window():
             
     def get_location_on_window(self):
         print('Press "h" to get the mouse position on screen! Press "q" to quit!')
-        self.window.activate()
         top_left = self.topleft_cord
         while True:
             if keyboard.is_pressed('h'):
@@ -132,6 +130,7 @@ class Client_Window():
         x = cord[0] + client_cord[0]
         y = cord[1] + client_cord[1]
         return x, y
+
 
 
     
@@ -192,8 +191,6 @@ class Rectangle():
                 return rectangle(*arg)
 
 
-            
-
 
     @property
     def args(self):
@@ -232,9 +229,7 @@ class Rectangle():
 if __name__ == '__main__':
     client = Client_Window()
     client.activate()
-    window_position = (548, 52)
-    print(client.window.center)
-    client.adjust_window('W')
+    client.get_location_on_window()
     #print(attrs(client.window))
 
 
@@ -250,9 +245,6 @@ if __name__ == '__main__':
     print(r1.screen_tuple)
     print(r1.window_tuple)
  """
-    
-
-    
 
 """ s_path = 'C:/Users\Ernesto Fernandes/Desktop/projects/runescape/fishing/photos/raw_lobster.png'
     
