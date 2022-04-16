@@ -1,1 +1,0 @@
-es\Desktop\projects\runescape\fishing\photos

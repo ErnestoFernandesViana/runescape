@@ -4,6 +4,8 @@ import mss.tools
 
 
 path = 'C:/Users/Ernesto Fernandes/Desktop/projects/runescape/rs_screen_input/'
+
+
 def mouse_position():
     mouse = Controller()
     current_mouse_position = mouse.position
@@ -30,3 +32,8 @@ def rectangle(top_left, bottom_right):
     width  = x2 - x1
     height = y2 - y1
     return {'left': x1, 'top':y1, 'width':width, 'height':height}
+
+def de_rectangle(left, top, width, height):
+    top_left = left, top
+    bottom_right = left + width, top + height
+    return top_left , bottom_right
