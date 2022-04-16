@@ -1,7 +1,7 @@
 from screen_input import mouse_position, save_sc_shot, rectangle
 import time 
 import keyboard
-from rs_window import Client_Window
+
 """Module designed to take ease prints and cordenates from screen"""
 
 """ def many_window_locations(key_name, json_name, n):

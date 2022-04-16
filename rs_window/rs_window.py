@@ -21,9 +21,6 @@ class Client_Window():
         self.bottomright_cord = tuple(x for x in self.window.bottomright)
         self.window.activate()
 
-    def top_left_cord(self):
-        return self.topleft_cord
-    
     def activate(self):
         self.window.activate()
 
