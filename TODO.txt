@@ -5,3 +5,11 @@ Bag:
     Essa classe deve reconhecer espaços livres na bag, doprar e clicar em itens selecionados. 
     ideis: para reconhecer espaço livres, analizar três pixels diferentes em cada slot. 
         Uma nova função em input screen para coletar coordenadas e pixels desses slots
+
+
+rs_window: 
+    Adicionar uma função de rotação para a bússola
+
+log_in:
+    Adicionar log_in automático: usuário, senha, colocando pin de bando automaticamente e fechanbdo aba de atualizações
+    

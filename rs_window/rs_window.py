@@ -11,6 +11,7 @@ from screen_input import rectangle, de_rectangle
 attrs = lambda x : [y for y in dir(x) if not y.startswith('_')]
 
 class Client_Window():
+    """Class intended to control main features of client window"""
     def __init__(self,client_name = 'Simplicity+'):
         self.client_name = client_name
         self.window = pag.getWindowsWithTitle(self.client_name)[0]
@@ -168,13 +169,13 @@ if __name__ == '__main__':
     print(client.topleft_cord)
     rec1 = {'left': 100, 'top':100, 'width':100, 'height':100}
     rec2 = (((100,100), (200,200)))
-    r1 = Rectangle(rec2, 's')
+    rec3 = [100,100,100,100]
+    r1 = Rectangle(rec1, 's')
     print(r1.screen_dict)
     print(r1.window_dict)
     print(r1.screen_tuple)
     print(r1.window_tuple)
-    r1.args = {1,2,3,4}
-    print(r1.args)
+
     
 
     
