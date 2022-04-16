@@ -1,7 +1,30 @@
 from screen_input import mouse_position, save_sc_shot, rectangle
 import time 
 import keyboard
+from rs_window import Client_Window
 """Module designed to take ease prints and cordenates from screen"""
+
+""" def many_window_locations(key_name, json_name, n):
+    dictionary = {}
+    position = 0
+    client = Client_Window()
+    while position < n:
+        dictionary[json_name +': ' + str(position)] = client.get_location_on_window()
+        position += 1
+        time.sleep(0.2)
+    with open( json_name +".json", "w") as outfile:
+        json.dump(dictionary, outfile)
+
+def many_screen_locations(key_name, json_name, n):
+    dictionary = {}
+    position = 0
+    client = Client_Window()
+    while position < n:
+        dictionary[json_name +': ' + str(position)] = client.get_location_on_screen()
+        position += 1
+        time.sleep(0.2)
+    with open( json_name +".json", "w") as outfile:
+        json.dump(dictionary, outfile) """
 
 while True:
     print('m :  Get locations on the screen \n \

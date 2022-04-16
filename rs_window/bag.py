@@ -16,8 +16,6 @@ class Bag():
                                 for key, value in self.bag_window_cords.items()}
 
 
-
-
 bag = Bag()
 print(bag.bag_window_cords)
 print(bag.bag_screen_cords)
