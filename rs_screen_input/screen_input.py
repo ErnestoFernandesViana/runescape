@@ -9,7 +9,6 @@ path = 'C:/Users/Ernesto Fernandes/Desktop/projects/runescape/rs_screen_input/'
 def mouse_position():
     mouse = Controller()
     current_mouse_position = mouse.position
-    print(current_mouse_position)
     return current_mouse_position
 
 

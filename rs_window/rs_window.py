@@ -3,10 +3,12 @@ import sys
 import cv2 as cv
 import numpy as np
 from copy import deepcopy
+import keyboard
+import time 
 
 path = 'C:/Users/Ernesto Fernandes/Desktop/projects/runescape/rs_screen_input'
 sys.path.insert(0, path)
-from screen_input import rectangle, de_rectangle
+from screen_input import rectangle, de_rectangle, mouse_position
 
 attrs = lambda x : [y for y in dir(x) if not y.startswith('_')]
 
@@ -71,6 +73,67 @@ class Client_Window():
                 cords.append(cordenates)
         return cords
 
+    def adjust_window(self, string):
+        """this method will adjust the perspective of the client window"""
+        if string not in ('N','S','E','W'):
+            raise Exception('String has to be: N,S,E or W')
+        self.window.activate()
+        bussola_cord = (548, 52)
+        screen_cords = self.convert_window_to_screen_cord(bussola_cord)
+        pag.moveTo(*screen_cords, 0.1) 
+        pag.click()
+        pag.moveTo(*self.window.center, 0.1)
+        pag.keyDown('up')
+        time.sleep(2.5)
+        pag.keyUp('up')
+        if string == 'S':
+            pag.keyDown('left')
+            time.sleep(1.8)
+            pag.keyUp('left')
+        if string == 'E':
+            pag.keyDown('left')
+            time.sleep(0.9)
+            pag.keyUp('left')    
+        if string == 'W':
+            pag.keyDown('right')
+            time.sleep(0.9)
+            pag.keyUp('right') 
+        
+
+
+
+    def get_location_on_screen(self):
+        print('Press "h" to get the mouse position on screen! Press "q" to quit!')
+        self.window.activate()
+        while True:
+            if keyboard.is_pressed('h'):
+                current_mouse_position = mouse_position()
+                print(f'Current screen position {current_mouse_position}')
+                return current_mouse_position
+            if keyboard.is_pressed('q'):
+                break
+            
+    def get_location_on_window(self):
+        print('Press "h" to get the mouse position on screen! Press "q" to quit!')
+        self.window.activate()
+        top_left = self.topleft_cord
+        while True:
+            if keyboard.is_pressed('h'):
+                current_mouse_position = mouse_position()
+                x = current_mouse_position[0] - top_left[0]
+                y = current_mouse_position[1] - top_left[1]
+                print(f'Current window position {x, y}')
+                return x, y
+            if keyboard.is_pressed('q'):
+                break
+
+    def convert_window_to_screen_cord(self, cord):
+        client_cord = self.topleft_cord
+        x = cord[0] + client_cord[0]
+        y = cord[1] + client_cord[1]
+        return x, y
+
+
     
 class Rectangle():
     """defines a rectangle and it's cordenates.
@@ -129,6 +192,9 @@ class Rectangle():
                 return rectangle(*arg)
 
 
+            
+
+
     @property
     def args(self):
         return self._args
@@ -166,16 +232,24 @@ class Rectangle():
 if __name__ == '__main__':
     client = Client_Window()
     client.activate()
+    window_position = (548, 52)
+    print(client.window.center)
+    client.adjust_window('W')
+    #print(attrs(client.window))
+
+
+
+"""     client.activate()
     print(client.topleft_cord)
     rec1 = {'left': 100, 'top':100, 'width':100, 'height':100}
     rec2 = (((100,100), (200,200)))
     rec3 = [100,100,100,100]
-    r1 = Rectangle(rec1, 's')
+    r1 = Rectangle(rec1, 'z')
     print(r1.screen_dict)
     print(r1.window_dict)
     print(r1.screen_tuple)
     print(r1.window_tuple)
-
+ """
     
 
     

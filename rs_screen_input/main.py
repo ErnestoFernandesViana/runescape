@@ -5,11 +5,11 @@ import keyboard
 
 while True:
     print('m :  Get locations on the screen \n \
-        s : Get screenshot between two pixels')
+    s : Get screenshot between two pixels')
     answer = input('What do you want?')
     if answer == 'm':
         print('Hit "h" to get location on the screen! \n \
-                Hit "s" to get a screen shot')
+        Hit "s" to get a screen shot')
         while True:
             if keyboard.is_pressed('h'):
                 mouse_position()
@@ -19,7 +19,7 @@ while True:
 
     if answer == 's':
         print('Hit "h" to take the top-left of the image. \n \
-                Hit "h" again to the bottom-right of the image!')
+        Hit "h" again to the bottom-right of the image!')
         while True:
             if keyboard.is_pressed('h'):
                 top_left = mouse_position()
