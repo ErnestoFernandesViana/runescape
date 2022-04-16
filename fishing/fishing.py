@@ -1,26 +1,29 @@
 import cv2 as cv
 import numpy as np
-import pyautogui
+import pyautogui as pag
+import sys 
 
+sys.path.insert(0, '../RUNESCAPE/rs_window')
 
-path = 'C:/Users/Ernesto Fernandes/Desktop/projects/runescape/fishing/photos/'
-screen = cv.imread(path + 'fishing_spot.png', cv.IMREAD_UNCHANGED)
-shrimp = cv.imread(path + 'shrimp.png', cv.IMREAD_UNCHANGED)
-
-result = cv.matchTemplate(screen,shrimp,cv.TM_CCOEFF_NORMED)
-threshold = 0.8
-locations = np.where(result <= threshold)
-#locations = list(zip(*locations[::-1]))
+from rs_window import Client_Window
 
 
 
 
-min_val, max_val, min_loc, max_loc = cv.minMaxLoc(result)
+class Fishing():
+    path = 'C:/Users/Ernesto Fernandes/Desktop/projects/runescape/fishing/photos/'
+    def __init__(self):
+        self.client = Client_Window()
 
-""" cv.imshow('shrimp', result)
-cv.waitKey()
-cv.destroyAllWindows() """
+
+    def show_fish_on_screen(self, fish):
+        self.client.activate()
+        fish_path =  self.path + fish + str('.png')
+        result = pag.locateAllOnScreen(fish_path, confidence=0.6, region=self.client.client_region())
+        self.client.show_rectangles(result)
+
 
 
 if __name__ == '__main__':
-    pass
+    fish = Fishing()
+    fish.show_fish_on_screen('raw_lobster')
