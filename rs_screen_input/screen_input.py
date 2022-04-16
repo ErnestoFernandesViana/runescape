@@ -36,4 +36,4 @@ def rectangle(top_left, bottom_right):
 def de_rectangle(left, top, width, height):
     top_left = left, top
     bottom_right = left + width, top + height
-    return top_left , bottom_right
+    return list(top_left) + list(bottom_right)
