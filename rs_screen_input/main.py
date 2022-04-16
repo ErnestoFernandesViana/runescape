@@ -4,7 +4,8 @@ import keyboard
 """Module designed to take ease prints and cordenates from screen"""
 
 while True:
-    print('m : Hit "h" to get locations on the screen')
+    print('m :  Get locations on the screen \n \
+        s : Get screenshot between two pixels')
     answer = input('What do you want?')
     if answer == 'm':
         print('Hit "h" to get location on the screen! \n \

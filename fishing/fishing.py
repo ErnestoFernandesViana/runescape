@@ -23,6 +23,4 @@ cv.destroyAllWindows() """
 
 
 if __name__ == '__main__':
-    print(min_val, max_val, min_loc, max_loc)
-    print(locations)
-    findClickPositions(path + 'fishing_spot.png', path + 'shrimp.png', 0.5, True)
+    pass

@@ -1,0 +1,7 @@
+Lista de coisa para fazer e ideias.
+
+Bag:
+    Fazer uma classe voltada a manipulação da bag do char. 
+    Essa classe deve reconhecer espaços livres na bag, doprar e clicar em itens selecionados. 
+    ideis: para reconhecer espaço livres, analizar três pixels diferentes em cada slot. 
+        Uma nova função em input screen para coletar coordenadas e pixels desses slots

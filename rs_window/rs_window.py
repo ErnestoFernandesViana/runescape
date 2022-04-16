@@ -29,7 +29,7 @@ class Client_Window():
 
     def show_rectangles(self, rect:list):
         self.activate()
-        thickness = 1
+        thickness = 2
         color = (255, 0, 0)
         im = pag.screenshot(region= self.client_region())
         open_cv_image = np.array(im.convert('RGB'))
@@ -41,10 +41,10 @@ class Client_Window():
                 print(box)
                 cordenates = de_rectangle(box.left, box.top, box.width, box.height)
                 print(cordenates)
-                cordenates[0] -= client.topleft_cord[0]
-                cordenates[2] -= client.topleft_cord[0]
-                cordenates[1] -= client.topleft_cord[1]
-                cordenates[3] -= client.topleft_cord[1]
+                cordenates[0] -= self.topleft_cord[0]
+                cordenates[2] -= self.topleft_cord[0]
+                cordenates[1] -= self.topleft_cord[1]
+                cordenates[3] -= self.topleft_cord[1]
                 top_left = (cordenates[0], cordenates[1])
                 bottom_right = (cordenates[2], cordenates[3])
                 print(cordenates)
@@ -53,41 +53,40 @@ class Client_Window():
         cv.waitKey()
         cv.destroyAllWindows()
 
-
-
-"""     def screen_to_client_window(*cordenates):
-        #se for um retângulo passa uma lista, se for top_left, uma tuple
-        if isinstance(cordenates, list):
-            new_cord = cordenates.copy()
-            new_cord[0] -= self.window.topleft_cord[0]
-            new_cord[1] -= self.window.topleft_cord[1]
-            return new_cord
-        if isinstance(cordenates, tuple):
-            new_cord = [0,0]
-            new_cord[0] = list(cordenates[0])
-            new_cord[1] = list(cordenates[1])
-            new_cord[0][0] -= self.window.topleft_cord[0]
-            new_cord[0][1] -= self.window.topleft_cord[1]
-            new_cord[1][0] -= self.window.bottomright_cord[0]
-            new_cord[1][1] -= self.window.bottomright_cord[1]
-            return new_cord """
-
+    def boxes_cord_on_client(self, lista):
+        boxes = list(lista)
+        cords = []
+        if boxes:
+            for box in boxes:
+                #cordenates = box.left, box.top, box.width, box.height
+                print(box)
+                cordenates = de_rectangle(box.left, box.top, box.width, box.height)
+                print(cordenates)
+                cordenates[0] -= self.topleft_cord[0]
+                cordenates[2] -= self.topleft_cord[0]
+                cordenates[1] -= self.topleft_cord[1]
+                cordenates[3] -= self.topleft_cord[1]
+                cords.append(cordenates)
+        return cords
+            
 
 
 
 
 if __name__ == '__main__':
-    s_path = 'C:/Users\Ernesto Fernandes/Desktop/projects/runescape/fishing/photos/shrimp.png'
+    s_path = 'C:/Users\Ernesto Fernandes/Desktop/projects/runescape/fishing/photos/raw_lobster.png'
     client = Client_Window()
     print(client.client_region())
     """ print(attrs(client.window)) """
     client.activate()
     result = pag.locateAllOnScreen(s_path, confidence=0.6, region=client.client_region())
+    print(result)
     boxes = list(result)
     print(boxes)
     client.show_rectangles(boxes)
+    print(client.boxes_cord_on_client(boxes))
     
-    
+
 
 
 
