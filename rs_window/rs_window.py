@@ -88,7 +88,7 @@ class Rectangle():
         self.window_tuple = de_rectangle(**self.window_dict)
 
     def _return_screen_dict(self):
-        arg = deepcopy(self.args)
+        arg = deepcopy(self._args)
         if self.mode == 's':
             if isinstance(arg, dict):
                 return self.args
@@ -108,7 +108,7 @@ class Rectangle():
                 return arg
 
     def _return_window_dict(self):
-        arg = deepcopy(self.args)
+        arg = deepcopy(self._args)
         if self.mode == 's':
             if isinstance(arg, dict):
                 top_left = self.client.topleft_cord
@@ -126,6 +126,23 @@ class Rectangle():
                 return self.args
             elif isinstance(arg, tuple):
                 return rectangle(*arg)
+
+
+    @property
+    def args(self):
+        return self._args
+
+    @args.setter
+    def args(self, value):
+        if isinstance(value, dict):
+            self._args =  value
+        elif isinstance(value, tuple):
+            self._args =  value 
+        elif isinstance(value, list):
+            dictionary = {}
+            dictionary['left'] = value[0] ; dictionary['top'] = value[1]
+            dictionary['width'] = value[2]; dictionary['height'] = value[3]
+            self._args = dictionary
 
     @property
     def mode(self):
@@ -145,18 +162,19 @@ class Rectangle():
         return str(f'Rectangle {self.args}, mode:{self.mode}')
 
 
-
 if __name__ == '__main__':
     client = Client_Window()
     client.activate()
     print(client.topleft_cord)
     rec1 = {'left': 100, 'top':100, 'width':100, 'height':100}
-    rec2 = (100,100), (200,200)
+    rec2 = (((100,100), (200,200)))
     r1 = Rectangle(rec2, 's')
     print(r1.screen_dict)
     print(r1.window_dict)
     print(r1.screen_tuple)
     print(r1.window_tuple)
+    r1.args = {1,2,3,4}
+    print(r1.args)
     
 
     
