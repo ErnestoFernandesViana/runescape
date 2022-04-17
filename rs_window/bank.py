@@ -3,6 +3,7 @@ import cv2 as cv
 import numpy as np
 from rs_window import Client_Window, Rectangle
 from bag import Bag
+import time
 
 class Bank():
     path = './rs_window/photos/'
@@ -15,6 +16,7 @@ class Bank():
         self.bank_rect_screen_list = self.rectangle.screen_tuple
 
     def check_bank_open(self, confidence=0.8):
+        """check if the bank window is open"""
         result = pag.locateOnScreen(self.path+'bankicons.png', region=self.bank_rect_screen_list, confidence=confidence)
         if result:
             return True 
@@ -22,17 +24,24 @@ class Bank():
             return False 
 
     def deposit_all(self, confidence=0.8):
+        """deposit all items in the bank"""
         bank_open = self.check_bank_open()
         if bank_open:
-            loc = pag.locateOnScreen(self.path+'deposit_all_icon.png', region=self.bank_rect_screen_list, confidence=confidence)
+            loc = pag.locateCenterOnScreen(self.path+'deposit_all_icon.png', region=self.bank_rect_screen_list, confidence=confidence)
             pag.moveTo(loc)
             pag.click(clicks=2, interval=0.2)
         else:
             return False
 
     def deposit_item(self, image, **kwargs):
-        pass
-
+        """deposit an item on bank. if keyword how == all, deposit all items"""
+        x = kwargs.get('how', 0)
+        if x == 0:
+            self.bag.click_item_on_bag(image)
+        elif x == 'all':
+            self.bag.click_item_on_bag(image, button='right')
+            time.sleep(0.1)
+            self.bag.click_item_on_bag('all_icon')
 
 
 
@@ -43,4 +52,4 @@ if __name__ == '__main__':
     result = pag.locateOnScreen(path+'bankicons.png', region = bank.bank_rect_screen_list)
     print(result)
     print(bank.check_bank_open())
-    bank.deposit_all()
+    print(bank.deposit_item('money', how='all'))

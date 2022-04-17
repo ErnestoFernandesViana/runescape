@@ -1,1 +1,1 @@
-
+t_item('money', how='all'))

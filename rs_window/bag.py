@@ -36,13 +36,13 @@ class Bag():
         self.client.activate()
         pag.press('f3')
 
-    def click(self, number):
+    def click(self, number, button='left'):
         """clica em uma posição da bag"""
         self.move(number)
-        pag.click()
-        return None
+        pag.click(button = button)
+        return True 
 
-    def click_on_item(self, image, confidence=0.8):
+    def click_on_item(self, image, confidence=0.8, button='left'):
         """Clica em uma imagem na bag"""
         self._bag_inventory()
         img_name = self.path + image + '.png'
@@ -50,15 +50,16 @@ class Bag():
                                              region=self.bag_list_cords)
         if item_loc:
             pag.moveTo(*item_loc, 0.1) 
-            pag.click()
+            pag.click(button = button)
+        else:
             return None
     
-    def click_item_on_bag(self, value, confidence=0.8):
+    def click_item_on_bag(self, value, confidence=0.8, button = 'left'):
         """click on an image or number"""
         if isinstance(value, str):
-            self.click_on_item(value, confidence)
+            self.click_on_item(value, confidence, button=button)
         if isinstance(value, int):
-            self.click(value)
+            self.click(value, button=button)
 
     def check_last_space_empty(self):
         """checa se o ultimo espaço no ivnentório esta vazio"""
@@ -120,7 +121,7 @@ if __name__ == '__main__':
     bag = Bag()
     path = bag.path 
     #print(bag.check_last_space_empty())
-    bag.click_item_on_bag('money2', 0.5)
+    bag.click_item_on_bag('money', 0.5, 'right')
 
 
 

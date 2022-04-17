@@ -1,6 +1,20 @@
 import cv2 as cv 
 import numpy as np
-from fishing import findClickPositions
+import sys
 
-path = 'C:/Users/Ernesto Fernandes/Desktop/projects/runescape/fishing/photos/'
-findClickPositions(path + 'fishing_spot.png', path + 'shrimp.png', 0.5, True)
+sys.path.insert(0, '../RUNESCAPE/rs_window')
+sys.path.insert(0, '../RUNESCAPE/bag')
+sys.path.insert(0, '../RUNESCAPE/bank')
+
+from rs_window import Client_Window, Rectangle
+from bag import Bag
+from bank import Bank 
+
+
+
+fish_image = input('What to fish?')
+bag = Bag()
+bank = Bank()
+
+while True:
+    break
