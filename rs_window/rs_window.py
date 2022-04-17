@@ -146,6 +146,10 @@ class Rectangle():
         self.window_dict = self._return_window_dict()
         self.screen_tuple = de_rectangle(**self.screen_dict)
         self.window_tuple = de_rectangle(**self.window_dict)
+        self.screen_list = [self.screen_dict['left'], self.screen_dict['top'],
+                             self.screen_dict['width'],self.screen_dict['height']]
+        self.window_list = [self.window_dict['left'], self.window_dict['top'],
+                             self.window_dict['width'],self.window_dict['height']]
 
     def _return_screen_dict(self):
         arg = deepcopy(self._args)
