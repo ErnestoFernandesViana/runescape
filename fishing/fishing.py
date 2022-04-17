@@ -17,13 +17,14 @@ class Fishing():
         self.client.activate()
         self.confidence = 0.6
         self.char_rectangle = Rectangle(((11, 33),(516, 337)), 'w')
-        self.char_rectangle_list = self.char_rectangle.screen_tuple
+        self.char_rectangle_list = self.char_rectangle.screen_rect
+        """have toi fiz the Rectangle class"""
 
 
     def show_fish_on_screen(self, fish):
         self.client.activate()
         fish_path =  self.path + fish + str('.png')
-        result = pag.locateAllOnScreen(fish_path, confidence=self.confidence, region=self.client.client_region())
+        result = pag.locateAllOnScreen(fish_path, confidence=self.confidence, region=self.char_rectangle_list)#region=self.client.client_region())
         self.client.show_rectangles(result)
 
     def click_on_fish(self, fish):
@@ -52,5 +53,12 @@ class Fishing():
 
 if __name__ == '__main__':
     fish = Fishing()
-    print(fish.find_banker_boy())
-
+    #fish.show_fish_on_screen('raw_lobster')
+    print(fish.char_rectangle_list)
+    print(fish.char_rectangle.screen_dict)
+    print(fish.char_rectangle.window_dict)
+    print(fish.char_rectangle.screen_tuple)
+    print(fish.char_rectangle.window_tuple)
+    print(fish.char_rectangle.screen_rect)
+    print(fish.char_rectangle.window_rect)
+    fish.show_fish_on_screen('raw_lobster')

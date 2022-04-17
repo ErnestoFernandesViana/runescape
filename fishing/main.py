@@ -2,6 +2,7 @@ import cv2 as cv
 import numpy as np
 import sys
 import time 
+import pyautogui as pag
 
 sys.path.insert(0, '../runescape/rs_window')
 
@@ -23,8 +24,8 @@ class Fisher():
         self.bank = Bank()
 
     def toggle(self):
-        self.fishing = False
-        self.banking = not(self.fishing)
+        self.fishing = not(self.fishing)
+        self.banking = not(self.banking)
 
 
 
@@ -39,7 +40,7 @@ while True:
         if fisher.job.click_on_fish(fish):
             last_slot_empty =  True
             while fisher.bag.check_last_space_empty():
-                time.sleep(10)
+                time.sleep(5)
                 client.activate()
                 pass
             fisher.toggle()
@@ -49,13 +50,20 @@ while True:
             print('Fish could not be found on screen.')
             continue
     else:
-        while not(fisher.bank.check_bank_open()):
-            time.sleep(2)
-            while not(fisher.job.find_banker_boy()):
-                time.sleep(3)
-        fisher.bank.deposit_item(fisher.fish, how='all')
-        fisher.bank.close_bank()
-        fisher.toggle()
+        while not(fisher.job.find_banker_boy()):
+            pass
+        time.sleep(4)
+        if fisher.bank.check_bank_open():
+            print('Opened bank.')
+            fisher.bank.deposit_item(fisher.fish, how='all')
+            print('Depositing all fishes.')
+            fisher.bank.close_bank()
+            print('Closed Bank')
+            fisher.toggle()
+            print('Back to fishing')
+            time.sleep(1)
+            pag.click(client.convert_window_to_screen_cord((638, 113)))
+            time.sleep(1)
 
 
 

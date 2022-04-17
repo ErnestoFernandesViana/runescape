@@ -121,7 +121,7 @@ if __name__ == '__main__':
     bag = Bag()
     path = bag.path 
     #print(bag.check_last_space_empty())
-    print(bag.check_last_space_empty())
+    bag.show_items_in_bag('raw_lobster')
 
 
 
