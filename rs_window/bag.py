@@ -1,9 +1,12 @@
+from subprocess import NORMAL_PRIORITY_CLASS
 import pyautogui as pag
 import cv2 as cv 
 import numpy as np
 from rs_window import Client_Window, Rectangle
 import json 
 import os 
+import copy
+import time
 
 with open("./rs_window/bag_slots_cords.json", 'r') as file:
     window_slots = json.load(file)
@@ -21,10 +24,12 @@ class Bag():
         self.bag_list_cords = self.bag_rectangle.screen_list
 
     def move(self, number):
+        """move o cursor para uma posição da bag"""
         self._bag_inventory()
         if (number < 1) or (number > 28) or not(isinstance(number, int)):
             raise Exception('Number must be integer between 1 and 28')
         pag.moveTo(*self.bag_screen_cords[number], 0.1)
+        return None
 
     def _bag_inventory(self):
         """go to bag page"""
@@ -32,10 +37,13 @@ class Bag():
         pag.press('f3')
 
     def click(self, number):
+        """clica em uma posição da bag"""
         self.move(number)
         pag.click()
+        return None
 
     def click_on_item(self, image, confidence=0.8):
+        """Clica em uma imagem na bag"""
         self._bag_inventory()
         img_name = self.path + image + '.png'
         item_loc = pag.locateCenterOnScreen(img_name, confidence=confidence,
@@ -43,17 +51,28 @@ class Bag():
         if item_loc:
             pag.moveTo(*item_loc, 0.1) 
             pag.click()
+            return None
+    
+    def click_item_on_bag(self, value, confidence=0.8):
+        """click on an image or number"""
+        if isinstance(value, str):
+            self.click_on_item(value, confidence)
+        if isinstance(value, int):
+            self.click(value)
 
     def check_last_space_empty(self):
+        """checa se o ultimo espaço no ivnentório esta vazio"""
+        self._bag_inventory()
         image = bag.path + 'empty' + '.png'
-        result = pag.locateAllOnScreen(image, confidence=0.8, region=bag.bag_list_cords)
-        result_list = list(result)
-        if len(result_list) == 0:
+        result = pag.locateOnScreen(image, confidence=0.8, region=bag.bag_list_cords)
+        if result == None:
             return False 
         else:
             return True 
 
     def show_items_in_bag(self, figure, confidence=0.8):
+        """mostra em retângulos os itens na bag"""
+        self._bag_inventory()
         image = self.path + figure + '.png'
         result = pag.locateAllOnScreen(image, confidence=confidence, region=bag.bag_list_cords)
         self.client.show_rectangles(result)
@@ -61,21 +80,63 @@ class Bag():
 
 
     def many_items_in_bag(self, figure, confidence=0.8):
+        """conta quantos itens tem na bag. Intervalo de confiança é imporante"""
+        self._bag_inventory()
         image = bag.path + figure + '.png'
         result = pag.locateAllOnScreen(image, confidence=confidence, region=bag.bag_list_cords)
         result_list = list(result)
         print(result_list)
         return len(result_list)
 
+    def drop_item(self, value, confidence=0.8):
+        """drop some item. It can be an integer or an image"""
+        self._bag_inventory()
+        if isinstance(value, str):
+            img_name = self.path + value + '.png'
+            item_loc = pag.locateCenterOnScreen(img_name, confidence=confidence,
+                                                region=self.bag_list_cords)
+            if item_loc:
+                try:
+                    pag.moveTo(*item_loc, 0.1)
+                    with pag.hold('shift'):
+                        pag.click()
+                except:
+                    print('Could not drop the item!')    
+            else:
+                return item_loc
+        if isinstance(value, int):
+            self.move(value)
+            try:
+                with pag.hold('shift'):
+                    pag.click()
+            except:
+                print('Could not drop the item!')
+
+
+
 
 
 if __name__ == '__main__':
     bag = Bag()
-    image = bag.path + 'empty' + '.png'
+    path = bag.path 
+    #print(bag.check_last_space_empty())
+    bag.click_item_on_bag('money2', 0.5)
 
-    print(bag.many_items_in_bag('money', 0.9))
-    bag.show_items_in_bag('money', 0.9)
-"""     result = pag.locateAllOnScreen(image, confidence=0.8, region=bag.bag_list_cords)
-    bag.client.show_rectangles(result)
+
+
+
+
+
+
+
+
+
+
+
+
+
+"""     result = pag.locateCenterOnScreen(path+'empty.png')
+    print(result)
+    print(type(result))
     print(bag.check_last_space_empty()) """
     

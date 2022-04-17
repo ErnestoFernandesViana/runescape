@@ -226,7 +226,9 @@ class Rectangle():
                 self._mode = 'w'
 
     def __repr__(self):
-        return str(f'Rectangle {self.args}, mode:{self.mode}')
+        return str(f'\tRectangle {self.args}, Mode: {self.mode}\n\
+        Screen Dict: {self.screen_dict}\n\tWindow Dict: {self.window_dict}\n\
+        Screen List: {self.screen_list}\n\tWindow List: {self.window_list}\n')
 
 
 if __name__ == '__main__':
