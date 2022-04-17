@@ -21,7 +21,7 @@ class Bag():
         self.topleft_window = (551, 234)
         self.bottomright_window = (739, 490)
         self.bag_rectangle = Rectangle((self.topleft_window, self.bottomright_window), 'w')
-        self.bag_list_cords = self.bag_rectangle.screen_list
+        self.bag_list_cords = self.bag_rectangle.screen_tuple
 
     def move(self, number):
         """move o cursor para uma posição da bag"""
@@ -64,8 +64,8 @@ class Bag():
     def check_last_space_empty(self):
         """checa se o ultimo espaço no ivnentório esta vazio"""
         self._bag_inventory()
-        image = bag.path + 'empty' + '.png'
-        result = pag.locateOnScreen(image, confidence=0.8, region=bag.bag_list_cords)
+        image = self.path + 'empty' + '.png'
+        result = pag.locateOnScreen(image, confidence=0.8, region=self.bag_list_cords)
         if result == None:
             return False 
         else:
@@ -121,7 +121,7 @@ if __name__ == '__main__':
     bag = Bag()
     path = bag.path 
     #print(bag.check_last_space_empty())
-    bag.click_item_on_bag('money', 0.5, 'right')
+    print(bag.check_last_space_empty())
 
 
 

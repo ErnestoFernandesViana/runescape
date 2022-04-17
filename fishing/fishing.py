@@ -12,6 +12,7 @@ from rs_window import Client_Window, Rectangle
 class Fishing():
     path = 'C:/Users/Ernesto Fernandes/Desktop/projects/runescape/fishing/photos/'
     def __init__(self):
+        self.state = 1
         self.client = Client_Window()
         self.client.activate()
         self.confidence = 0.6
@@ -39,6 +40,6 @@ class Fishing():
 
 if __name__ == '__main__':
     fish = Fishing()
-    result = fish.click_on_fish('raw_lobster')
+    if fish.click_on_fish('raw_lobster'):
+        print('it clicked')
     #fish.show_fish_on_screen('raw_lobster')
-    print(result)

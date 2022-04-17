@@ -5,6 +5,7 @@ import numpy as np
 from copy import deepcopy
 import keyboard
 import time 
+import os 
 
 path = 'C:/Users/Ernesto Fernandes/Desktop/projects/runescape/rs_screen_input'
 sys.path.insert(0, path)
@@ -233,6 +234,7 @@ if __name__ == '__main__':
     client.activate()
     client.get_location_on_window()
     #print(attrs(client.window))
+    print(os.listdir())
 
 
 
