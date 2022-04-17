@@ -36,10 +36,21 @@ class Fishing():
             return True
         else:
             return False
+    
+    def find_banker_boy(self):
+        for x in range(1,6):
+            fish_path =  self.path + 'bank' + str(x) + str('.png')
+            bank_location = pag.locateCenterOnScreen(fish_path, confidence=self.confidence, region=self.char_rectangle_list)
+            if bank_location:
+                pag.moveTo(*bank_location)
+                pag.click()
+                return True 
+            if x == 5:
+                return False
+
 
 
 if __name__ == '__main__':
     fish = Fishing()
-    if fish.click_on_fish('raw_lobster'):
-        print('it clicked')
-    #fish.show_fish_on_screen('raw_lobster')
+    print(fish.find_banker_boy())
+

@@ -38,18 +38,34 @@ class Bank():
         x = kwargs.get('how', 0)
         if x == 0:
             self.bag.click_item_on_bag(image)
+            return True 
         elif x == 'all':
             self.bag.click_item_on_bag(image, button='right')
             time.sleep(0.1)
             self.bag.click_item_on_bag('all_icon')
+            return True
+
+    def close_bank(self):
+        path = self.path + 'close_bank_icon.png'
+        loc = pag.locateCenterOnScreen(path, region=self.client.window.box, confidence=0.8)
+        if loc:
+            pag.moveTo(loc)
+            pag.click()
+            return True 
+        else:
+            return False
+
 
 
 
 if __name__ == '__main__':
     bank = Bank()
-    bank.client.activate()
+    bank.close_bank()
+
+
+"""     bank.client.activate()
     path = bank.path
     result = pag.locateOnScreen(path+'bankicons.png', region = bank.bank_rect_screen_list)
     print(result)
     print(bank.check_bank_open())
-    print(bank.deposit_item('money', how='all'))
+    print(bank.deposit_item('money', how='all')) """

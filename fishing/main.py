@@ -43,8 +43,21 @@ while True:
                 client.activate()
                 pass
             fisher.toggle()
+            print('Fisher is now going to bank!')
         else:
-            #fish wasnt found on screen
+            time.sleep(3)
+            print('Fish could not be found on screen.')
             continue
-    break
+    else:
+        while not(fisher.bank.check_bank_open()):
+            time.sleep(2)
+            while not(fisher.job.find_banker_boy()):
+                time.sleep(3)
+        fisher.bank.deposit_item(fisher.fish, how='all')
+        fisher.bank.close_bank()
+        fisher.toggle()
+
+
+
+
 

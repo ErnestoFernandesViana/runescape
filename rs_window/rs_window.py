@@ -235,6 +235,7 @@ if __name__ == '__main__':
     client.get_location_on_window()
     #print(attrs(client.window))
     print(os.listdir())
+    print(client.window.box)
 
 
 
