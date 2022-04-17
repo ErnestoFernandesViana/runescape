@@ -29,6 +29,8 @@ class Client_Window():
         return (rec['left'], rec['top'], rec['width'], rec['height'])
 
     def show_rectangles(self, rect:list):
+        """ to_do this method would fit better in rectangle class passing in a png to see 
+        where it fits on screen"""
         self.activate()
         thickness = 2
         color = (255, 0, 0)

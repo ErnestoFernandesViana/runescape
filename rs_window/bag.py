@@ -43,28 +43,39 @@ class Bag():
         if item_loc:
             pag.moveTo(*item_loc, 0.1) 
             pag.click()
-        
 
+    def check_last_space_empty(self):
+        image = bag.path + 'empty' + '.png'
+        result = pag.locateAllOnScreen(image, confidence=0.8, region=bag.bag_list_cords)
+        result_list = list(result)
+        if len(result_list) == 0:
+            return False 
+        else:
+            return True 
+
+    def show_items_in_bag(self, figure, confidence=0.8):
+        image = self.path + figure + '.png'
+        result = pag.locateAllOnScreen(image, confidence=confidence, region=bag.bag_list_cords)
+        self.client.show_rectangles(result)
+        return None
+
+
+    def many_items_in_bag(self, figure, confidence=0.8):
+        image = bag.path + figure + '.png'
+        result = pag.locateAllOnScreen(image, confidence=confidence, region=bag.bag_list_cords)
+        result_list = list(result)
+        print(result_list)
+        return len(result_list)
 
 
 
 if __name__ == '__main__':
     bag = Bag()
-    """ print(bag.bag_rectangle.window_tuple)
-    print(bag.bag_rectangle.screen_tuple)
-    bag.client.show_rectangles(bag.bag_rectangle.window_tuple) """
+    image = bag.path + 'empty' + '.png'
 
-
-
-    bag.move(10)
-    bag.click_on_item('money')
-
-
-
-
-
-    """ print(bag.client.client_region())
-    print(bag.bag_rectangle.window_dict)
-    print(bag.bag_rectangle.screen_dict)
-    print(bag.bag_rectangle.window_list)
-print(bag.bag_rectangle.screen_list) """
+    print(bag.many_items_in_bag('money', 0.9))
+    bag.show_items_in_bag('money', 0.9)
+"""     result = pag.locateAllOnScreen(image, confidence=0.8, region=bag.bag_list_cords)
+    bag.client.show_rectangles(result)
+    print(bag.check_last_space_empty()) """
+    
