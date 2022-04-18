@@ -52,8 +52,9 @@ class Bag():
         if item_loc:
             pag.moveTo(*item_loc, 0.1) 
             pag.click(button = button)
+            return True 
         else:
-            return None
+            return False
     
     def click_item_on_bag(self, value, confidence=0.7, button = 'left'):
         """click on an image or number"""

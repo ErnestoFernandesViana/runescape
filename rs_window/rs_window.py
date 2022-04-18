@@ -137,8 +137,6 @@ class Client_Window():
                 w = x + client_cord[0]
                 z = y + client_cord[1]
                 print(f'Current screen position: {current_mouse_position}')
-                print(top_left)
-                print(current_mouse_position)
                 time.sleep(0.3)
             if keyboard.is_pressed('q'):
                 break
