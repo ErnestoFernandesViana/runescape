@@ -10,10 +10,10 @@ class Bank():
     def __init__(self):
         self.client = Client_Window()
         self.bag = Bag()
-        self.topleft_window = (25, 47)
-        self.bottomright_window = (458, 325)
+        self.topleft_window = (17, 41)
+        self.bottomright_window = (508, 350)
         self.rectangle = Rectangle((self.topleft_window, self.bottomright_window), 'w')
-        self.bank_rect_screen_list = self.rectangle.screen_tuple
+        self.bank_rect_screen_list = self.rectangle.screen_rect
 
     def check_bank_open(self, confidence=0.8):
         """check if the bank window is open"""
@@ -30,6 +30,7 @@ class Bank():
             loc = pag.locateCenterOnScreen(self.path+'deposit_all_icon.png', region=self.bank_rect_screen_list, confidence=confidence)
             pag.moveTo(loc)
             pag.click(clicks=2, interval=0.2)
+            return True
         else:
             return False
 
@@ -61,6 +62,7 @@ class Bank():
 if __name__ == '__main__':
     bank = Bank()
     bank.close_bank()
+    bank.rectangle.show_rectangle()
 
 
 """     bank.client.activate()

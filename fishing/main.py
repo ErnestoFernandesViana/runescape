@@ -12,7 +12,7 @@ from bank import Bank
 from fishing import Fishing
 
 
-fish = 'raw_lobster'
+fish = 'raw_monkfish'
 
 class Fisher():
     def __init__(self):
@@ -40,7 +40,7 @@ while True:
         if fisher.job.click_on_fish(fish):
             last_slot_empty =  True
             while fisher.bag.check_last_space_empty():
-                time.sleep(5)
+                time.sleep(30)
                 client.activate()
                 pass
             fisher.toggle()
@@ -50,10 +50,31 @@ while True:
             print('Fish could not be found on screen.')
             continue
     else:
-        while not(fisher.job.find_banker_boy()):
+        while not(fisher.bank.check_bank_open()):
+            while not(fisher.job.find_banker_boy()):
+                pass
+                if fisher.bank.check_bank_open():
+                    break
+            time.sleep(4)
+        print('Opened bank.')
+        fisher.bank.deposit_item(fisher.fish, how='all')
+        fisher.bank.deposit_item('raw_manta_ray', how='all')
+        print('Depositing all fishes.')
+        fisher.bank.close_bank()
+        print('Closed Bank')
+        fisher.toggle()
+        print('Back to fishing')
+        time.sleep(1)
+        pag.click(client.convert_window_to_screen_cord((370, 335)))
+        time.sleep(1)
+
+"""         while not(fisher.job.find_banker_boy()):
             pass
-        time.sleep(4)
-        if fisher.bank.check_bank_open():
+            if fisher.bank.check_bank_open():
+                break
+        
+        while not(fisher.bank.check_bank_open()):
+            pass
             print('Opened bank.')
             fisher.bank.deposit_item(fisher.fish, how='all')
             print('Depositing all fishes.')
@@ -63,7 +84,7 @@ while True:
             print('Back to fishing')
             time.sleep(1)
             pag.click(client.convert_window_to_screen_cord((634, 117)))
-            time.sleep(1)
+            time.sleep(1) """
 
 
 

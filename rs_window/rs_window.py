@@ -83,21 +83,33 @@ class Client_Window():
         pag.moveTo(*screen_cords, 0.1) 
         pag.click()
         pag.moveTo(*self.window.center, 0.1)
-        pag.keyDown('up')
-        time.sleep(2.5)
-        pag.keyUp('up')
         if string == 'S':
             pag.keyDown('left')
+            pag.keyDown('up')
             time.sleep(1.8)
             pag.keyUp('left')
-        if string == 'E':
+            time.sleep(2.5-1.8)
+            pag.keyUp('up')
+        elif string == 'E':
+            pag.keyDown('up')
             pag.keyDown('left')
             time.sleep(0.9)
-            pag.keyUp('left')    
-        if string == 'W':
+            pag.keyUp('left')
+            time.sleep(2.5-0.9)  
+            pag.keyUp('up')  
+        elif string == 'W':
+            pag.keyDown('up')
             pag.keyDown('right')
             time.sleep(0.9)
-            pag.keyUp('right') 
+            pag.keyUp('right')
+            time.sleep(2.5-0.9)
+            pag.keyUp('up')
+        elif string == 'N':
+            pag.keyDown('up')
+            time.sleep(2.5)
+            pag.keyUp('up')
+
+
         
 
 
@@ -121,7 +133,13 @@ class Client_Window():
                 x = current_mouse_position[0] - top_left[0]
                 y = current_mouse_position[1] - top_left[1]
                 print(f'Current window position {x, y}')
-                return x, y
+                client_cord = self.topleft_cord
+                w = x + client_cord[0]
+                z = y + client_cord[1]
+                print(f'Current screen position: {current_mouse_position}')
+                print(top_left)
+                print(current_mouse_position)
+                time.sleep(0.3)
             if keyboard.is_pressed('q'):
                 break
 
@@ -145,13 +163,23 @@ class Rectangle():
     def __init__(self, args, mode='s'):
         self.args = args
         self.mode = mode
+        #dicionário com left, top, width, height
         self.screen_dict = self._return_screen_dict()
         self.window_dict = self._return_window_dict()
-        self.screen_tuple = de_rectangle(**self.screen_dict)
-        self.window_tuple = de_rectangle(**self.window_dict)
+        #lista com topleft e bottomright
+        self.screen_list = de_rectangle(**self.screen_dict)
+        self.window_list = de_rectangle(**self.window_dict)
+        #Lista com left, top, wiodth, height
         self.screen_rect = [self.screen_dict['left'], self.screen_dict['top'], self.screen_dict['width'], self.screen_dict['height']]
         self.window_rect = [self.window_dict['left'], self.window_dict['top'], self.window_dict['width'], self.window_dict['height']]
+        #tuple com topleft e bottomright
+        self.screen_tuple = self._list_to_tuple(self.screen_list)
+        self.window_tuple = self._list_to_tuple(self.window_list)
 
+    def _list_to_tuple(self, lista):
+        t1 = lista[0], lista[1]
+        t2 = lista[2], lista[3]
+        return t1,t2
 
     def _return_screen_dict(self):
         arg = deepcopy(self._args)
@@ -225,10 +253,29 @@ class Rectangle():
             elif value == 'w':
                 self._mode = 'w'
 
+    def show_rectangle(self):
+        self.client.activate()
+        thickness = 2
+        color = (255, 0, 0)
+        im = pag.screenshot(region= self.client.client_region())
+        open_cv_image = np.array(im.convert('RGB'))
+        open_cv_image = open_cv_image[:, :, ::-1].copy() 
+        t1 = self.window_list[0], self.window_list[1]
+        t2 = self.window_list[2], self.window_list[3]
+        try:
+            cv.rectangle(open_cv_image, t1,t2, color, thickness)
+        except:
+            print('Could not print the rectangle.')
+            return False
+        cv.imshow('rectangle',open_cv_image)
+        cv.waitKey()
+        cv.destroyAllWindows()
+        
     def __repr__(self):
         return str(f'\tRectangle {self.args}, Mode: {self.mode}\n\
         Screen Dict: {self.screen_dict}\n\tWindow Dict: {self.window_dict}\n\
-        Screen List: {self.screen_list}\n\tWindow List: {self.window_list}\n')
+        Screen Rect: {self.screen_rect}\n\tWindow Rect: {self.window_rect}\n\
+        Screen Tuple: {self.screen_tuple}\n\tWindow Tuple: {self.window_tuple}')
 
 
 if __name__ == '__main__':
@@ -236,6 +283,12 @@ if __name__ == '__main__':
     client.activate()
     print(client.get_location_on_window())
     #print(attrs(client.window))
+
+
+
+"""     rec1 = {'left': 100, 'top':100, 'width':100, 'height':100}
+    r1 = Rectangle(rec1, 'w')
+    r1.show_rectangle() """
 
 
 

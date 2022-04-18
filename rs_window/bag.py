@@ -21,7 +21,7 @@ class Bag():
         self.topleft_window = (551, 234)
         self.bottomright_window = (739, 490)
         self.bag_rectangle = Rectangle((self.topleft_window, self.bottomright_window), 'w')
-        self.bag_list_cords = self.bag_rectangle.screen_tuple
+        self.bag_list_cords = self.bag_rectangle.screen_rect
 
     def move(self, number):
         """move o cursor para uma posição da bag"""
@@ -38,6 +38,7 @@ class Bag():
 
     def click(self, number, button='left'):
         """clica em uma posição da bag"""
+        self._bag_inventory()
         self.move(number)
         pag.click(button = button)
         return True 
@@ -54,7 +55,7 @@ class Bag():
         else:
             return None
     
-    def click_item_on_bag(self, value, confidence=0.8, button = 'left'):
+    def click_item_on_bag(self, value, confidence=0.7, button = 'left'):
         """click on an image or number"""
         if isinstance(value, str):
             self.click_on_item(value, confidence, button=button)
