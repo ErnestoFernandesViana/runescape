@@ -234,7 +234,7 @@ class Rectangle():
 if __name__ == '__main__':
     client = Client_Window()
     client.activate()
-    print(client.client_region())
+    print(client.get_location_on_window())
     #print(attrs(client.window))
 
 

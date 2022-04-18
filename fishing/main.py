@@ -62,7 +62,7 @@ while True:
             fisher.toggle()
             print('Back to fishing')
             time.sleep(1)
-            pag.click(client.convert_window_to_screen_cord((638, 113)))
+            pag.click(client.convert_window_to_screen_cord((634, 117)))
             time.sleep(1)
 
 
