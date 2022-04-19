@@ -66,13 +66,17 @@ class Bank():
                 return True 
             elif isinstance(hm, str):
                 if hm == 'all':
-                    pag.click(button='left')
+                    pag.click(button='right')
+                    time.sleep(0.1)
                     all = pag.locateCenterOnScreen(self.path + 'all_icon.png', region=self.bank_rect_screen_list, confidence=0.8)
-                    time.sleep(0.2)
-                    pag.moveTo(*all, 0.1)
-                    pag.click()
-                    print('Draw till full bag')
-                    return True 
+                    if all:    
+                        time.sleep(0.2)
+                        pag.moveTo(*all, 0.1)
+                        pag.click()
+                        print('Draw till full bag')
+                        return True 
+                    else:
+                        return False
         else:
             return False
         
@@ -87,7 +91,7 @@ class Bank():
             return True 
             
         else:
-            lupa = pag.locateCenterOnScreen(self.path + 'lupa.png', region=self.bank_rect_screen_list, confidence=confidence)
+            lupa = pag.locateCenterOnScreen(self.path + 'lupa.png', region=self.bank_rect_screen_list, confidence=0.8)
             pag.moveTo(*lupa, 0.1)
             pag.click(clicks=2)
             time.sleep(1)

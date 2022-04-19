@@ -9,8 +9,12 @@ dictionary = {}
 position = 1
 client = Client_Window()
 while position < 29:
-    dictionary['bag_slot: ' + str(position)] = client.get_location_on_window()
+    x = client.get_location_on_window()
+    time.sleep(0.2)
+    y = client.get_location_on_window()
+    time.sleep(0.2)
+    dictionary['bag_rect_slot: ' + str(position)] = (x, y)
     position += 1
     time.sleep(0.2)
-with open("bag_slots_cords.json", "w") as outfile:
+with open("bag_rect_slots_cords.json", "w") as outfile:
     json.dump(dictionary, outfile)

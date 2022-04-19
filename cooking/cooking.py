@@ -34,11 +34,47 @@ class Cooking(Skilling_StartUp):
             return True
         else:
             print('Furnance could not be found')
+            return False 
 
         
+    def check_if_cooking(self):
+        pass 
+
+
+    def check_if_done_cooking(self, confidence= 0.4):
+        path = './rs_window/photos/'
+        last_space_region = self.bag.bag_rectangle_slots_dict[28].screen_rect
+        fish_on_last_square = pag.locateCenterOnScreen(path + self.fish + '.png', 
+                        confidence = confidence, region = last_space_region)
+        if fish_on_last_square:
+            print('Continues cooking')
+            return True 
+        else:
+            print('Done cooking!')
+            return False 
 
     def go_bank(self):
-        pass 
+        result = pag.locateCenterOnScreen(self.cooking_photo_path + 'bank.png',
+         confidence=0.6, region = self.action_screen_rect)
+        if result:
+            print('Found bank')
+            pag.moveTo(*result, 0.1)
+            pag.click()
+            time.sleep(3)
+            if self.bank.deposit_all():
+                print('All fish deposited.')
+                if self.bank.draw_item(self.fish, hm='all', confidence=0.5):
+                    print('Loaded the bag')
+                    time.sleep(0.1)
+                    self.bank.close_bank()
+                    return True 
+            else:
+                print('Could not deposit the fish.')
+                return False 
+        else:
+            print('Could not find bank')
+            return False
+
 
     def work_modifoca(self):
         pass
@@ -47,4 +83,5 @@ class Cooking(Skilling_StartUp):
 if __name__ == '__main__':
     cook = Cooking()
     cook.fish = 'raw_lobster'
-    cook.cook_item()
+    cook.check_if_done_cooking()
+    #cook.bank.show_items_rectangles('lupa')
