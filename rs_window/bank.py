@@ -6,8 +6,8 @@ from bag import Bag
 import time
 
 class Bank():
-    path = './rs_window/photos/'
     def __init__(self):
+        self.path = './rs_window/photos/'
         self.client = Client_Window()
         self.bag = Bag()
         self.topleft_window = (17, 41)

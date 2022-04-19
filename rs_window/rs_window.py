@@ -6,8 +6,8 @@ from copy import deepcopy
 import keyboard
 import time 
 import os 
-
-path = 'C:/Users/Ernesto Fernandes/Desktop/projects/runescape/rs_screen_input'
+#'C:/Users/Ernesto Fernandes/Desktop/projects/runescape
+path = './rs_screen_input'
 sys.path.insert(0, path)
 from screen_input import rectangle, de_rectangle, mouse_position
 
@@ -108,10 +108,6 @@ class Client_Window():
             pag.keyDown('up')
             time.sleep(2.5)
             pag.keyUp('up')
-
-
-        
-
 
 
     def get_location_on_screen(self):
@@ -276,9 +272,22 @@ class Rectangle():
         Screen Tuple: {self.screen_tuple}\n\tWindow Tuple: {self.window_tuple}')
 
 
+class Skilling_StartUp():
+    def __init__(self):
+        self.client = Client_Window()
+        self.client.activate()
+        self.action_topleft_window = (9, 29)
+        self.action_bottomright_window = (520, 363)
+        self.action_screen = Rectangle((self.action_topleft_window, self.action_bottomright_window), 'w')
+        self.action_screen_rect = self.action_screen.screen_rect
+
+
+
+
 if __name__ == '__main__':
     client = Client_Window()
     client.activate()
+    ssp = Skilling_StartUp()
     print(client.get_location_on_window())
     #print(attrs(client.window))
 
