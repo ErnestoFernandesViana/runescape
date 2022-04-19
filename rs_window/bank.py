@@ -56,8 +56,26 @@ class Bank():
         else:
             return False
 
-    def draw_item(self, item, hm=1):
+    def draw_item(self, item, hm=1, confidence=0.6):
         self.check_bank_open()
+        if self.find_item_on_bank(item, confidence=confidence):
+            print(f'Found {item} on bank!')
+            if isinstance(hm, int):
+                pag.click(clicks=hm, interval=0.1)
+                print(f'Draw {hm} {item}')
+                return True 
+            elif isinstance(hm, str):
+                if hm == 'all':
+                    pag.click(button='left')
+                    all = pag.locateCenterOnScreen(self.path + 'all_icon.png', region=self.bank_rect_screen_list, confidence=0.8)
+                    time.sleep(0.2)
+                    pag.moveTo(*all, 0.1)
+                    pag.click()
+                    print('Draw till full bag')
+                    return True 
+        else:
+            return False
+        
         
 
     def find_item_on_bank(self, item, confidence=0.6):
@@ -85,6 +103,7 @@ class Bank():
                 print('Couldn find item.')
                 return False 
 
+
     def show_items_rectangles(self, item, confidence=0.8):
         self.client.activate()
         item_path =  self.path + item + str('.png')
@@ -100,7 +119,7 @@ class Bank():
 
 if __name__ == '__main__':
     bank = Bank()
-    bank.find_item_on_bank('raw_lobster', confidence=0.5)
+    bank.draw_item('raw_lobster',  hm=5, confidence=0.5)
     #bank.show_items_rectangles('raw_lobster', confidence=0.5)
 
 

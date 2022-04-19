@@ -53,12 +53,12 @@ class Fishing():
 
 if __name__ == '__main__':
     fish = Fishing()
-    #fish.show_fish_on_screen('raw_lobster')
-    print(fish.char_rectangle_list)
+    fish.show_fish_on_screen('raw_lobster')
+"""     print(fish.char_rectangle_list)
     print(fish.char_rectangle.screen_dict)
     print(fish.char_rectangle.window_dict)
     print(fish.char_rectangle.screen_tuple)
     print(fish.char_rectangle.window_tuple)
     print(fish.char_rectangle.screen_rect)
-    print(fish.char_rectangle.window_rect)
-    fish.show_fish_on_screen('raw_lobster')
+    print(fish.char_rectangle.window_rect) """
+    
