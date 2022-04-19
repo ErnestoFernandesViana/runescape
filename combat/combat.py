@@ -7,18 +7,13 @@ import time
 import os 
 
 sys.path.insert(0, './rs_window')
-from rs_window import Client_Window, Rectangle
+from rs_window import Client_Window, Rectangle, Skilling_StartUp
 from bag import Bag
 from bank import Bank
 
-class Combat():
+class Combat(Skilling_StartUp):
     def __init__(self):
-        self.client = Client_Window()
-        self.client.activate()
-        self.action_topleft_window = (9, 29)
-        self.action_bottomright_window = (520, 363)
-        self.action_screen = Rectangle((self.action_topleft_window, self.action_bottomright_window), 'w')
-        self.action_screen_rect = self.action_screen.screen_rect
+        super().__init__()
         self.bag = Bag()
         self.bank = Bank()
 

@@ -57,8 +57,8 @@ while True:
                     break
             time.sleep(4)
         print('Opened bank.')
-        fisher.bank.deposit_item(fisher.fish, how='all')
-        fisher.bank.deposit_item('raw_manta_ray', how='all')
+        fisher.bank.deposit_item(fisher.fish, hm='all')
+        fisher.bank.deposit_item('raw_manta_ray', hm='all')
         print('Depositing all fishes.')
         fisher.bank.close_bank()
         print('Closed Bank')
@@ -68,23 +68,7 @@ while True:
         pag.click(client.convert_window_to_screen_cord((370, 335)))
         time.sleep(1)
 
-"""         while not(fisher.job.find_banker_boy()):
-            pass
-            if fisher.bank.check_bank_open():
-                break
-        
-        while not(fisher.bank.check_bank_open()):
-            pass
-            print('Opened bank.')
-            fisher.bank.deposit_item(fisher.fish, how='all')
-            print('Depositing all fishes.')
-            fisher.bank.close_bank()
-            print('Closed Bank')
-            fisher.toggle()
-            print('Back to fishing')
-            time.sleep(1)
-            pag.click(client.convert_window_to_screen_cord((634, 117)))
-            time.sleep(1) """
+
 
 
 

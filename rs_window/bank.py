@@ -36,7 +36,7 @@ class Bank():
 
     def deposit_item(self, image, **kwargs):
         """deposit an item on bank. if keyword how == all, deposit all items"""
-        x = kwargs.get('how', 0)
+        x = kwargs.get('hm', 0)
         if x == 0:
             self.bag.click_item_on_bag(image)
             return True 
@@ -56,13 +56,52 @@ class Bank():
         else:
             return False
 
+    def draw_item(self, item, hm=1):
+        self.check_bank_open()
+        
+
+    def find_item_on_bank(self, item, confidence=0.6):
+        path  = self.path + item + '.png'
+        result = pag.locateCenterOnScreen(path, region=self.bank_rect_screen_list, confidence=confidence)
+        time.sleep(1)
+        if result:
+            pag.moveTo(*result, 0.1)
+            return True 
+            
+        else:
+            lupa = pag.locateCenterOnScreen(self.path + 'lupa.png', region=self.bank_rect_screen_list, confidence=confidence)
+            pag.moveTo(*lupa, 0.1)
+            pag.click(clicks=2)
+            time.sleep(1)
+            item_string = item.replace('_',' ')
+            pag.write(item_string, interval=0.1)
+            pag.press('enter')
+            time.sleep(1)
+            result = pag.locateCenterOnScreen(path, region=self.bank_rect_screen_list, confidence=confidence)
+            if result: 
+                pag.moveTo(*result, 0.1)
+                return True 
+            else:
+                print('Couldn find item.')
+                return False 
+
+    def show_items_rectangles(self, item, confidence=0.8):
+        self.client.activate()
+        item_path =  self.path + item + str('.png')
+        result = pag.locateAllOnScreen(item_path, confidence=confidence, region=self.bank_rect_screen_list)
+        self.client.show_rectangles(result)
+
+        
+        
+
+
 
 
 
 if __name__ == '__main__':
     bank = Bank()
-    bank.close_bank()
-    bank.rectangle.show_rectangle()
+    bank.find_item_on_bank('raw_lobster', confidence=0.5)
+    #bank.show_items_rectangles('raw_lobster', confidence=0.5)
 
 
 """     bank.client.activate()

@@ -13,6 +13,22 @@ from bank import Bank
 class Cooking(Skilling_StartUp):
     def __init__(self):
         super().__init__()
+        self.bank = Bank()
+        self.bag = Bag()
+        self.cooking = None 
+        self.banking = None 
+        self.fish = None 
+
+    def cook_item(self):
+        pass 
+
+    def go_bank(self):
+        pass 
+
+    def work_modifoca(self):
+        pass
+
+
 
 
 
