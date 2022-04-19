@@ -5,6 +5,8 @@ from rs_window import Client_Window
 import json
 import time 
 
+
+# have to make better rectangles around the abg
 dictionary = {}
 position = 1
 client = Client_Window()

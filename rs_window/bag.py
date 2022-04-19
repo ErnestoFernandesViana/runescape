@@ -11,8 +11,6 @@ import time
 with open("./rs_window/bag_slots_cords.json", 'r') as file:
     window_slots = json.load(file)
 
-with open("./rs_window/bag_rect_slots_cords.json", 'r') as file:
-    window_rect_slots = json.load(file)
 
 class Bag():
     path = "./rs_window/photos/"
@@ -21,9 +19,6 @@ class Bag():
         self.bag_window_cords = {int(key[-2:]) : value for key, value in window_slots.items()}
         self.bag_screen_cords = {key: self.client.convert_window_to_screen_cord(value)
                                 for key, value in self.bag_window_cords.items()}
-        self.bag_rectangle_slots_dict0 = {int(key[-2:]) : (tuple((value[0][0], value[0][1])), tuple((value[1][0], value[1][1]))) for key, value in window_rect_slots.items()}
-        self.bag_rectangle_slots = {key: Rectangle(value, 'w') for key, value in self.bag_rectangle_slots_dict0.items()}
-        self.bag_rectangle_slots_dict = {key: Rectangle(value, 'w').screen_rect for key, value in self.bag_rectangle_slots_dict0.items()}
         self.topleft_window = (551, 234)
         self.bottomright_window = (739, 490)
         self.bag_rectangle = Rectangle((self.topleft_window, self.bottomright_window), 'w')
@@ -87,14 +82,6 @@ class Bag():
         self.client.show_rectangles(result)
         return None
 
-    def show_item_in_bag_in_specific_slot(self, figure, slot, confidence=0.8):
-        self._bag_inventory()
-        image = self.path + figure + '.png'
-        result = pag.locateAllOnScreen(image, confidence=confidence, region=bag.bag_rectangle_slots_dict[slot])
-        if not(result):
-            print('Figure wasnt found')
-        self.client.show_rectangles(result)
-        return None
 
 
 
@@ -138,19 +125,9 @@ class Bag():
 if __name__ == '__main__':
     bag = Bag()
     path = bag.path 
-    #bag.show_items_in_bag('raw_lobster')
-    bag.bag_rectangle_slots[26].show_rectangle()
-    bag.show_item_in_bag_in_specific_slot('raw_lobster', slot=27, confidence = 0.8)
-"""     for slot in range(1, 29):
-        bag.show_item_in_bag_in_specific_slot('raw_lobster', slot=28, confidence = 0.8) """
-
-    #print(bag.bag_rectangle_slots_dict)
-"""     for i, x in enumerate(bag.bag_rectangle_slots_dict):
-        x[i+1].show_rectangle() """
+    bag.show_items_in_bag('raw_lobster', confidence=0.94)
 
 
-    #print(bag.check_last_space_empty())
-    #bag.show_items_in_bag('raw_lobster')
     
 
 

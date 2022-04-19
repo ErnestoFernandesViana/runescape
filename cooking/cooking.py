@@ -16,19 +16,23 @@ class Cooking(Skilling_StartUp):
         super().__init__()
         self.bank = Bank()
         self.bag = Bag()
-        self.cooking = None 
-        self.banking = None 
+        self.cooking = True 
+        self.banking = False
         self.fish = None 
 
-    def cook_item(self):
-        self.bag.click_item_on_bag(self.fish)
+    def _toggle(self):
+        self.cooking = not(self.cooking)
+        self.banking = not(self.banking)
+
+    def cook_item(self, confidence=0.8):
+        self.bag.click_item_on_bag(self.fish, confidence = confidence)
         furnance = pag.locateCenterOnScreen(self.cooking_photo_path + 'forno.png',
-                         region = self.action_screen_rect, confidence=0.5)
+                         region = self.action_screen_rect, confidence=0.6)
         if furnance:
             print('Furnance found')
-            pag.moveTo(*furnance, 0.1)
+            pag.moveTo(*furnance, 0.2)
             pag.click()
-            time.sleep(2)
+            time.sleep(3)
             pag.press('1')
             print(f'Cooking {self.fish}')
             return True
@@ -36,22 +40,18 @@ class Cooking(Skilling_StartUp):
             print('Furnance could not be found')
             return False 
 
-        
-    def check_if_cooking(self):
-        pass 
 
 
-    def check_if_done_cooking(self, confidence= 0.4):
+    def check_if_done_cooking(self, confidence= 0.96):
         path = './rs_window/photos/'
-        last_space_region = self.bag.bag_rectangle_slots_dict[28].screen_rect
         fish_on_last_square = pag.locateCenterOnScreen(path + self.fish + '.png', 
-                        confidence = confidence, region = last_space_region)
+                        confidence = confidence, region = self.bag.bag_list_cords)
         if fish_on_last_square:
             print('Continues cooking')
-            return True 
+            return False
         else:
             print('Done cooking!')
-            return False 
+            return True 
 
     def go_bank(self):
         result = pag.locateCenterOnScreen(self.cooking_photo_path + 'bank.png',
@@ -77,11 +77,28 @@ class Cooking(Skilling_StartUp):
 
 
     def work_modifoca(self):
-        pass
+        self.client.activate()
+        self.client.adjust_window('N')
+        while True:
+            if self.cooking:
+                if self.check_if_done_cooking():
+                    self._toggle()
+                    continue
+                if not(self.cook_item(confidence=0.96)):
+                    continue
+                time.sleep(38)
+
+            if self.banking:
+                self.go_bank()
+                time.sleep(1)
+                self._toggle()
+
+            
+        
 
 
 if __name__ == '__main__':
     cook = Cooking()
     cook.fish = 'raw_lobster'
-    cook.check_if_done_cooking()
+    cook.work_modifoca()
     #cook.bank.show_items_rectangles('lupa')
