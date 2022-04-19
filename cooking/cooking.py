@@ -11,6 +11,7 @@ from bag import Bag
 from bank import Bank 
 
 class Cooking(Skilling_StartUp):
+    cooking_photo_path = './cooking/photos/'
     def __init__(self):
         super().__init__()
         self.bank = Bank()
@@ -20,7 +21,21 @@ class Cooking(Skilling_StartUp):
         self.fish = None 
 
     def cook_item(self):
-        pass 
+        self.bag.click_item_on_bag(self.fish)
+        furnance = pag.locateCenterOnScreen(self.cooking_photo_path + 'forno.png',
+                         region = self.action_screen_rect, confidence=0.5)
+        if furnance:
+            print('Furnance found')
+            pag.moveTo(*furnance, 0.1)
+            pag.click()
+            time.sleep(2)
+            pag.press('1')
+            print(f'Cooking {self.fish}')
+            return True
+        else:
+            print('Furnance could not be found')
+
+        
 
     def go_bank(self):
         pass 
@@ -29,10 +44,7 @@ class Cooking(Skilling_StartUp):
         pass
 
 
-
-
-
-
 if __name__ == '__main__':
     cook = Cooking()
-    print(cook.action_topleft_window)
+    cook.fish = 'raw_lobster'
+    cook.cook_item()
