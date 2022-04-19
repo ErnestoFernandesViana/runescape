@@ -1,0 +1,1 @@
+""" Essa eu dxo pa vc celovsky, pelos velhos tempos"""

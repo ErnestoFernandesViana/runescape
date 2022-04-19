@@ -7,6 +7,8 @@ import os
 
 sys.path.insert(0, './rs_window')
 from rs_window import Skilling_StartUp
+from bag import Bag 
+from bank import Bank 
 
 class Cooking(Skilling_StartUp):
     def __init__(self):
