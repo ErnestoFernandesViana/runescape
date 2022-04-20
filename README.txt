@@ -8,3 +8,4 @@ Configurations:
 
 
     ::togglealert   to desactivate notifications
+    scrool well can change zoom distance OFF. keep distance always on max 

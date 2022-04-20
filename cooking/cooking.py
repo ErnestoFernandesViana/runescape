@@ -42,7 +42,7 @@ class Cooking(Skilling_StartUp):
 
 
 
-    def check_if_done_cooking(self, confidence= 0.96):
+    def check_if_done_cooking(self, confidence= 0.98):
         path = './rs_window/photos/'
         fish_on_last_square = pag.locateCenterOnScreen(path + self.fish + '.png', 
                         confidence = confidence, region = self.bag.bag_list_cords)
@@ -63,7 +63,7 @@ class Cooking(Skilling_StartUp):
             time.sleep(3)
             if self.bank.deposit_all():
                 print('All fish deposited.')
-                if self.bank.draw_item(self.fish, hm='all', confidence=0.5):
+                if self.bank.draw_item(self.fish, hm='all', confidence=0.7):
                     print('Loaded the bag')
                     time.sleep(0.1)
                     self.bank.close_bank()
@@ -84,7 +84,7 @@ class Cooking(Skilling_StartUp):
                 if self.check_if_done_cooking():
                     self._toggle()
                     continue
-                if not(self.cook_item(confidence=0.96)):
+                if not(self.cook_item(confidence=0.98)):
                     continue
                 time.sleep(38)
 
@@ -95,10 +95,9 @@ class Cooking(Skilling_StartUp):
 
             
         
-
+#tela azul esta zoando o bot
 
 if __name__ == '__main__':
     cook = Cooking()
-    cook.fish = 'raw_lobster'
-    cook.work_modifoca()
-    #cook.bank.show_items_rectangles('lupa')
+    cook.fish = 'raw_monkfish'
+    cook.client.adjust_window('N')

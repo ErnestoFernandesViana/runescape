@@ -83,6 +83,7 @@ class Client_Window():
         pag.moveTo(*screen_cords, 0.1) 
         pag.click()
         pag.moveTo(*self.window.center, 0.1)
+        pag.scroll(-1000)
         if string == 'S':
             pag.keyDown('left')
             pag.keyDown('up')

@@ -18,7 +18,8 @@ class Bank():
     def check_bank_open(self, confidence=0.8):
         """check if the bank window is open"""
         result = pag.locateOnScreen(self.path+'bankicons.png', region=self.bank_rect_screen_list, confidence=confidence)
-        if result:
+        result2 = pag.locateOnScreen(self.path+'infinity_bank.png', region=self.bank_rect_screen_list, confidence=confidence)
+        if result or result2:
             return True 
         elif result == None:
             return False 
@@ -26,7 +27,7 @@ class Bank():
     def deposit_all(self, confidence=0.8):
         """deposit all items in the bank"""
         bank_open = self.check_bank_open()
-        if bank_open:
+        while bank_open:
             loc = pag.locateCenterOnScreen(self.path+'deposit_all_icon.png', region=self.bank_rect_screen_list, confidence=confidence)
             pag.moveTo(loc)
             pag.click(clicks=2, interval=0.2)
@@ -123,8 +124,7 @@ class Bank():
 
 if __name__ == '__main__':
     bank = Bank()
-    bank.draw_item('raw_lobster',  hm=5, confidence=0.5)
-    #bank.show_items_rectangles('raw_lobster', confidence=0.5)
+    bank.rectangle.show_rectangle()
 
 
 """     bank.client.activate()
