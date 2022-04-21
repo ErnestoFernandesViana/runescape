@@ -123,9 +123,8 @@ class Bag():
 
 
 if __name__ == '__main__':
-    bag = Bag()
-    path = bag.path 
-    bag.show_items_in_bag('raw_monkfish', confidence=0.99)
+    bag = Bag() 
+    bag.show_items_in_bag('raw_manta_ray', confidence=0.90)
 
 
     

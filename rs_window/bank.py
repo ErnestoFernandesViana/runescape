@@ -19,9 +19,13 @@ class Bank():
         """check if the bank window is open"""
         result = pag.locateOnScreen(self.path+'bankicons.png', region=self.bank_rect_screen_list, confidence=confidence)
         result2 = pag.locateOnScreen(self.path+'infinity_bank.png', region=self.bank_rect_screen_list, confidence=confidence)
-        if result or result2:
-            return True 
-        elif result == None:
+        if result2:
+            if result:
+                return True 
+            else:
+                time.sleep(10)
+                self.check_bank_open()
+        elif (result == None) and (result2 == None):
             return False 
 
     def deposit_all(self, confidence=0.8):

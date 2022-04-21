@@ -32,19 +32,28 @@ class Client_Window():
     def show_rectangles(self, rect:list):
         """ to_do this method would fit better in rectangle class passing in a png to see 
         where it fits on screen"""
+        open_cv_image = self._create_open_cv_shoot() 
+        self._draw_rectangle_on_figure(rect, open_cv_image)
+        cv.imshow('rectangle',open_cv_image)
+        cv.waitKey()
+        cv.destroyAllWindows()
+
+    def _create_open_cv_shoot(self):
         self.activate()
-        thickness = 2
-        color = (255, 0, 0)
         im = pag.screenshot(region= self.client_region())
         open_cv_image = np.array(im.convert('RGB'))
-        open_cv_image = open_cv_image[:, :, ::-1].copy() 
+        open_cv_image = deepcopy(open_cv_image[:, :, ::-1])
+        return open_cv_image
+
+    def _draw_rectangle_on_figure(self, rect, open_cv_image):
+        thickness = 2
+        color = (255, 0, 0)
         boxes = list(rect)
         if boxes:
             for box in boxes:
                 #cordenates = box.left, box.top, box.width, box.height
                 print(box)
                 cordenates = de_rectangle(box.left, box.top, box.width, box.height)
-                print(cordenates)
                 cordenates[0] -= self.topleft_cord[0]
                 cordenates[2] -= self.topleft_cord[0]
                 cordenates[1] -= self.topleft_cord[1]
@@ -53,9 +62,20 @@ class Client_Window():
                 bottom_right = (cordenates[2], cordenates[3])
                 print(cordenates)
                 cv.rectangle(open_cv_image, top_left, bottom_right, color, thickness)
+                
+
+
+    
+    def show_rectangle_from_many_photos(self, photos_paths:list, confidence=0.8):
+        self.activate()
+        open_cv_image = self._create_open_cv_shoot()
+        for path in photos_paths:
+            all = pag.locateAllOnScreen(path, region=self.client_region(), confidence=confidence)
+            self._draw_rectangle_on_figure(all, open_cv_image)
         cv.imshow('rectangle',open_cv_image)
         cv.waitKey()
         cv.destroyAllWindows()
+
 
     def boxes_cord_on_client(self, lista):
         boxes = list(lista)
@@ -290,8 +310,13 @@ if __name__ == '__main__':
     client = Client_Window()
     client.activate()
     ssp = Skilling_StartUp()
-    print(client.get_location_on_window())
+    #print(client.get_location_on_window())
     #print(attrs(client.window))
+    pag.moveTo(client.window.center)
+    pag.click(button='middle')
+    time.sleep(0.1)
+    pag.scroll(1000)
+
 
 
 

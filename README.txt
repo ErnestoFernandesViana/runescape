@@ -9,3 +9,6 @@ Configurations:
 
     ::togglealert   to desactivate notifications
     scrool well can change zoom distance OFF. keep distance always on max 
+
+
+    Combat configuratins: For rock crabs, scrool well off and third pin distance, second last close.
