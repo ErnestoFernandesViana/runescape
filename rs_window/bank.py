@@ -129,6 +129,7 @@ class Bank():
 if __name__ == '__main__':
     bank = Bank()
     bank.rectangle.show_rectangle()
+    bank.show_items_rectangles('raw_manta_ray')
 
 
 """     bank.client.activate()

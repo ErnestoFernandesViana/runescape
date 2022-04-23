@@ -12,25 +12,32 @@ from bag import Bag
 from bank import Bank
 
 class Combat(Skilling_StartUp):
-    combat_file_path = './combat/photos/'
+    
+    combat_file_path = 'combat/photos/'
 
     def __init__(self):
         super().__init__()
         self.bag = Bag()
         self.bank = Bank()
         self.monster = None
+        self.photo_number = None
 
     def attack_the_mf(self, confidence = 0.6):
-        result = pag.locateCenterOnScreen(self, confidence, region = self.action_screen_rect)
-        if result:
-            pag.moveTo(*result, 0.1)
-            pag.click()
-            return True 
-        else:
-            return False 
-
+        if self.monster:
+            path_list = self.name_to_path(self.monster, self.photo_number)
+            for path in path_list:
+                result = pag.locateCenterOnScreen(path, confidence= confidence, region = self.action_screen_rect)
+                if result:
+                    pag.moveTo(*result, 0.1)
+                    pag.click()
+                    return True 
+                else:
+                    continue 
+                    #'combat/photos/heath_bar.png'
     def check_if_in_combat(self):
-        pass
+        health  = pag.locateOnScreen('combat\photos\heath_bar.png', confidence=0.9, region=self.action_screen_rect)
+        return True if health else False
+
 
     @abstractmethod
     def health_status(self):
@@ -73,9 +80,8 @@ class Combat(Skilling_StartUp):
 
 
 if __name__ == '__main__':
-
     combat = Combat()
-    combat.show_rectangle_matches('frost_dragon', 10,0.7)
+    print(combat.check_if_in_combat())
     #combat.client.show_rectangle_from_many_photos(combat.name_to_path('rock_crab', 5), confidence=0.6)
 """     all = pag.locateAllOnScreen(combat.combat_file_path + 'rock_crab5.png',
          region = combat.client.client_region(), confidence=0.5)
