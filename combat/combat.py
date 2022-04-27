@@ -34,6 +34,14 @@ class Combat(Skilling_StartUp):
                 else:
                     continue 
                     #'combat/photos/heath_bar.png'
+    
+    def farm(self):
+        while True:
+            while not(self.check_if_in_combat()):
+                if self.attack_the_mf(): 
+                    time.sleep(5)
+
+
     def check_if_in_combat(self):
         health  = pag.locateOnScreen('combat\photos\heath_bar.png', confidence=0.9, region=self.action_screen_rect)
         return True if health else False

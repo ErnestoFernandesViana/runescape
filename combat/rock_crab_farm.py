@@ -17,8 +17,9 @@ from combat import Combat
 craber = Combat()
 craber.monster = 'rock_crab'
 craber.photo_number = 10
-while True:
+craber.farm()
+""" while True:
     if craber.attack_the_mf():
         time.sleep(10)
     else:
-        continue
+        continue """
