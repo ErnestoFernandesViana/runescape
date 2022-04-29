@@ -312,10 +312,7 @@ if __name__ == '__main__':
     ssp = Skilling_StartUp()
     #print(client.get_location_on_window())
     #print(attrs(client.window))
-    pag.moveTo(client.window.center)
-    pag.click(button='middle')
-    time.sleep(0.1)
-    pag.scroll(1000)
+    client.get_location_on_window()
 
 
 

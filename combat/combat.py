@@ -1,3 +1,5 @@
+
+
 from abc import abstractmethod
 import pyautogui as pag
 import sys 
@@ -11,9 +13,17 @@ from rs_window import Client_Window, Rectangle, Skilling_StartUp
 from bag import Bag
 from bank import Bank
 
+increase_y = lambda cords, x: (cords[0], cords[1] + x*20)
+movement  = lambda location,x: (location[0]+20*x, location[1])
+
 class Combat(Skilling_StartUp):
     
     combat_file_path = 'combat/photos/'
+    health_pixel_color = (134, 39, 18)
+    health_window = [increase_y((541, 257), x) for x in range(0, 8)]
+    char_window_position = (268, 208)
+    
+
 
     def __init__(self):
         super().__init__()
@@ -21,6 +31,11 @@ class Combat(Skilling_StartUp):
         self.bank = Bank()
         self.monster = None
         self.photo_number = None
+        self.health_screen = self._init_health_screen()
+        self.char_screen_position = self.client.convert_window_to_screen_cord(self.char_window_position)
+
+    def _init_health_screen(cls):
+        return list(map(cls.client.convert_window_to_screen_cord, cls.health_window))
 
     def attack_the_mf(self, confidence = 0.6):
         if self.monster:
@@ -35,10 +50,10 @@ class Combat(Skilling_StartUp):
                     continue 
                     #'combat/photos/heath_bar.png'
     
-    def farm(self):
+    def farm(self, confidence = 0.6):
         while True:
             while not(self.check_if_in_combat()):
-                if self.attack_the_mf(): 
+                if self.attack_the_mf(confidence=confidence): 
                     time.sleep(5)
 
 
@@ -47,9 +62,22 @@ class Combat(Skilling_StartUp):
         return True if health else False
 
 
-    @abstractmethod
     def health_status(self):
-        pass 
+        for i, x in enumerate(self.health_screen):
+            if pag.pixelMatchesColor(*x, self.health_pixel_color, tolerance=30):
+                value = 100 - i*10
+                print(f'Health currently at {value}%')
+                return True 
+        return False 
+
+    def move_right(self):
+        pag.moveTo(movement(self.char_screen_position,1))
+        pag.click(button='right')
+        time.sleep(0.1)
+        location = pag.locateCenterOnScreen('combat\photos\walk.png', region=self.action_screen_rect)
+        pag.moveTo(location)
+        time.sleep(0.1)
+        pag.click()
 
     @abstractmethod
     def eat_food(self):
@@ -89,7 +117,8 @@ class Combat(Skilling_StartUp):
 
 if __name__ == '__main__':
     combat = Combat()
-    print(combat.check_if_in_combat())
+    print(combat.char_screen_position)
+    combat.move_right()
     #combat.client.show_rectangle_from_many_photos(combat.name_to_path('rock_crab', 5), confidence=0.6)
 """     all = pag.locateAllOnScreen(combat.combat_file_path + 'rock_crab5.png',
          region = combat.client.client_region(), confidence=0.5)

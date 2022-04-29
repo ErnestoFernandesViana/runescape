@@ -124,7 +124,7 @@ class Bag():
 
 if __name__ == '__main__':
     bag = Bag() 
-    bag.show_items_in_bag('raw_manta_ray', confidence=0.90)
+    bag.show_items_in_bag('raw_monkfish', confidence=0.90)
 
 
     
