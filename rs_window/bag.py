@@ -139,15 +139,6 @@ if __name__ == '__main__':
 
 
 
-
-
-
-
-
-
-
-
-
 """     result = pag.locateCenterOnScreen(path+'empty.png')
     print(result)
     print(type(result))

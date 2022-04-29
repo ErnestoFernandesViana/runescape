@@ -21,7 +21,6 @@ class Combat(Skilling_StartUp):
     combat_file_path = 'combat/photos/'
     health_pixel_color = (134, 39, 18)
     health_window = [increase_y((541, 257), x) for x in range(0, 8)]
-    char_window_position = (268, 208)
     
 
 
@@ -32,7 +31,6 @@ class Combat(Skilling_StartUp):
         self.monster = None
         self.photo_number = None
         self.health_screen = self._init_health_screen()
-        self.char_screen_position = self.client.convert_window_to_screen_cord(self.char_window_position)
 
     def _init_health_screen(cls):
         return list(map(cls.client.convert_window_to_screen_cord, cls.health_window))
@@ -70,14 +68,6 @@ class Combat(Skilling_StartUp):
                 return True 
         return False 
 
-    def move_right(self):
-        pag.moveTo(movement(self.char_screen_position,1))
-        pag.click(button='right')
-        time.sleep(0.1)
-        location = pag.locateCenterOnScreen('combat\photos\walk.png', region=self.action_screen_rect)
-        pag.moveTo(location)
-        time.sleep(0.1)
-        pag.click()
 
     @abstractmethod
     def eat_food(self):
